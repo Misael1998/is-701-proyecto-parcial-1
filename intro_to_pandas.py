@@ -34,11 +34,15 @@ def get_custom_dataset(data_dict, index_name):
 
 def get_first_n_rows(dataset, n):
   """Retorna un DataFrame que contiene las primeras <n> filas de <dataset>"""
-  pass
+  newData = dataset.head(n)
+  return newData
+  #pass
 
 def get_last_n_rows(dataset, n):
   """Retorna un DataFrame que contiene las últimas <n> filas de <dataset>"""
-  pass
+  newData = dataset.tail(n)
+  return newData
+  #pass
 
 def get_shape(dataset):
   """Retorna una tupla con las dimensiones del DataFrame <dataset>"""
@@ -56,7 +60,12 @@ def count_nulls_per_column(dataset):
 
 def remove_cols_with_nulls(dataset):
   """Retorna <dataset> con todas las columnas que tienen datos de tipo null removidas."""
-  pass
+  colNUll = dataset.isnull().any()
+  numCol = dataset.columns[colNUll]
+  index = numCol.values
+  newData = dataset.drop(index, axis=1)
+  return newData
+  #pass
 
 def get_slice(dataset, start, end):
   """Retorna un DataFrame formado por un grupo de filas de <dataset>, desde la fila en la posición
@@ -66,7 +75,9 @@ def get_slice(dataset, start, end):
 def filter_by_col(dataset, column_name, value):
   """Filtra <dataset> retornando un DataFrame que sólo contiene las filas donde el valor de la 
   columna <column_name> es igual a <value>"""
-  pass
+  filterData = dataset[dataset[column_name] == value]
+  return filterData
+  #pass
 
 def fill_numeric_nulls(dataset): 
   """Retorna <dataset> con sus los valores numéricos faltantes se sustituídos por el valor de la media de la columna a la que pertenecen y los no numéricos se dejan tal como están."""
