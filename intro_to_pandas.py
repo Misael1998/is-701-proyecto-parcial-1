@@ -17,12 +17,20 @@ import pandas as pd
 
 def get_dataset_from_csv(filename, index_col_num):
   """Retorna un DataFrame leyendolo desde el archivo <filename>, define la columna en la posicion <index_col_num> como índice de éste."""
-  pass
+  path = filename
+  df = pd.read_csv(path, index_col = index_col_num)
+
+  return df
 
 def get_custom_dataset(data_dict, index_name):
   """Retorna un DataFrame a partir del diccionario <data_dict>, define la columna <index_name> como
   índice del dataset"""
-  pass
+
+  data = data_dict
+  df = pd.DataFrame(data)
+  df.set_index(index_name)
+
+  return df
 
 def get_first_n_rows(dataset, n):
   """Retorna un DataFrame que contiene las primeras <n> filas de <dataset>"""
