@@ -40,11 +40,12 @@ def fill_numeric_nulls(dataset):
     #recorrer todo el arreglo columnas numericas
     for e in col_num:
         average = 0
-        #Convertir todo a numero, pero si no es numero lo convierte en NaN
-        pd.to_numeric(dt[e], errors='coerce')
-        average = (dt[e].sum())/(len(dt) - (dt[e].isnull().sum()))
-        #reemplazar NaN
-        dt[e].fillna(average, inplace=True)
+        if (dt[e].isnull().sum()>0):
+            #Convertir todo a numero, pero si no es numero lo convierte en NaN
+            pd.to_numeric(dt[e], errors='coerce')
+            average = (dt[e].sum())/(len(dt) - (dt[e].isnull().sum()))
+            #reemplazar NaN
+            dt[e].fillna(average, inplace=True)
     return dt
 
 data = pd.read_csv("test_data_1.csv")

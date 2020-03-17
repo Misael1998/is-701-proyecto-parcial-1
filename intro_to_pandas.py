@@ -97,9 +97,10 @@ def fill_numeric_nulls(dataset):
       col_num.append(name_column)
   for e in col_num:
     average = 0
-    pd.to_numeric(dt[e], errors='coerce')
-    average = (dt[e].sum())/(len(dt) - (dt[e].isnull().sum()))
-    dt[e].fillna(average, inplace=True)
+    if (dt[e].isnull().sum()>0):
+      pd.to_numeric(dt[e], errors='coerce')
+      average = (dt[e].sum())/(len(dt) - (dt[e].isnull().sum()))
+      dt[e].fillna(average, inplace=True)
   return dt
 
 def get_most_correlated_cols(dataset, umbral): 
