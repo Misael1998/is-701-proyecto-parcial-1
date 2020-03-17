@@ -46,11 +46,15 @@ def get_last_n_rows(dataset, n):
 
 def get_shape(dataset):
   """Retorna una tupla con las dimensiones del DataFrame <dataset>"""
-  pass
+  dt=pd.DataFrame(dataset)
+  shape = dt.shape
+  return shape
 
 def change_column_names(dataset, new_names):
   """Retorna un DataFrame cuyas columnas han sido renombradas de acuerdo a los nombres proporcionados en <new_names> que es una lista de strings."""
-  pass
+  dt=pd.DataFrame(dataset)
+  dt.columns = new_names
+  return dt
 
 def count_nulls_per_column(dataset):
   """Retorna una Serie (columna) que contiene como índice los nombres de las columnas del 
@@ -70,7 +74,9 @@ def remove_cols_with_nulls(dataset):
 def get_slice(dataset, start, end):
   """Retorna un DataFrame formado por un grupo de filas de <dataset>, desde la fila en la posición
   <start> hasta la fila en la posición <end> - 1"""
-  pass
+  dt=pd.DataFrame(dataset)
+  rows = dt.iloc[start:end]
+  return rows
 
 def filter_by_col(dataset, column_name, value):
   """Filtra <dataset> retornando un DataFrame que sólo contiene las filas donde el valor de la 
