@@ -87,7 +87,20 @@ def filter_by_col(dataset, column_name, value):
 
 def fill_numeric_nulls(dataset): 
   """Retorna <dataset> con sus los valores numéricos faltantes se sustituídos por el valor de la media de la columna a la que pertenecen y los no numéricos se dejan tal como están."""
-  pass
+  dt=pd.DataFrame(dataset)
+  col_num=[]
+  len(dt.index)
+  for i in range(len(dt.columns)):
+    name_column=dt.columns[i]
+    p= True if (dt[name_column].dtypes == 'int64') or (dt[name_column].dtypes == 'float64') else False
+    if p == True:
+      col_num.append(name_column)
+  for e in col_num:
+    average = 0
+    pd.to_numeric(dt[e], errors='coerce')
+    average = (dt[e].sum())/(len(dt) - (dt[e].isnull().sum()))
+    dt[e].fillna(average, inplace=True)
+  return dt
 
 def get_most_correlated_cols(dataset, umbral): 
   """Retorna un conjunto de frozensets con los pares de columnas cuyas correlaciones positivas o negativas segan mayores o iguales a <umbral>."""

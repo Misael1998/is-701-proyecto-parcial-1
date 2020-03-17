@@ -151,7 +151,11 @@ try:
   ds = get_dataset_from_csv("test_dataset.csv", 0)
   res = fill_numeric_nulls(ds)
   test = get_dataset_from_csv("test_data_6.csv", 0)
-  if not np.allclose(res.to_numpy(), test.to_numpy()):
+  if not (res.columns.to_list() == ds.columns.to_list()):
+  	raise Exception('El datset retornado no tiene las mismas columnas que el original (-15%)')
+  num_test = test.select_dtypes(include="number").to_numpy()
+  num_res = res.select_dtypes(include="number").to_numpy()
+  if not np.allclose(num_test, num_res):
     raise Exception('No se obtuvo el dataset esperado (-15%)')
 except Exception as e:
   print_function_error('fill_numeric_nulls', e)
