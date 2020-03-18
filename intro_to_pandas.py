@@ -46,11 +46,15 @@ def get_last_n_rows(dataset, n):
 
 def get_shape(dataset):
   """Retorna una tupla con las dimensiones del DataFrame <dataset>"""
-  pass
+  dt=pd.DataFrame(dataset)
+  shape = dt.shape
+  return shape
 
 def change_column_names(dataset, new_names):
   """Retorna un DataFrame cuyas columnas han sido renombradas de acuerdo a los nombres proporcionados en <new_names> que es una lista de strings."""
-  pass
+  dt=pd.DataFrame(dataset)
+  dt.columns = new_names
+  return dt
 
 def count_nulls_per_column(dataset):
   """Retorna una Serie (columna) que contiene como índice los nombres de las columnas del 
@@ -70,7 +74,9 @@ def remove_cols_with_nulls(dataset):
 def get_slice(dataset, start, end):
   """Retorna un DataFrame formado por un grupo de filas de <dataset>, desde la fila en la posición
   <start> hasta la fila en la posición <end> - 1"""
-  pass
+  dt=pd.DataFrame(dataset)
+  rows = dt.iloc[start:end]
+  return rows
 
 def filter_by_col(dataset, column_name, value):
   """Filtra <dataset> retornando un DataFrame que sólo contiene las filas donde el valor de la 
@@ -81,7 +87,21 @@ def filter_by_col(dataset, column_name, value):
 
 def fill_numeric_nulls(dataset): 
   """Retorna <dataset> con sus los valores numéricos faltantes se sustituídos por el valor de la media de la columna a la que pertenecen y los no numéricos se dejan tal como están."""
-  pass
+  dt=pd.DataFrame(dataset)
+  col_num=[]
+  len(dt.index)
+  for i in range(len(dt.columns)):
+    name_column=dt.columns[i]
+    p= True if (dt[name_column].dtypes == 'int64') or (dt[name_column].dtypes == 'float64') else False
+    if p == True:
+      col_num.append(name_column)
+  for e in col_num:
+    average = 0
+    if (dt[e].isnull().sum()>0):
+      pd.to_numeric(dt[e], errors='coerce')
+      average = (dt[e].sum())/(len(dt) - (dt[e].isnull().sum()))
+      dt[e].fillna(average, inplace=True)
+  return dt
 
 def get_most_correlated_cols(dataset, umbral): 
   """Retorna un conjunto de frozensets con los pares de columnas cuyas correlaciones positivas o negativas segan mayores o iguales a <umbral>."""
