@@ -28,7 +28,7 @@ def get_custom_dataset(data_dict, index_name):
 
   data = data_dict
   df = pd.DataFrame(data)
-  df.set_index(index_name)
+  df = df.set_index(index_name)
 
   return df
 
@@ -60,7 +60,9 @@ def count_nulls_per_column(dataset):
   """Retorna una Serie (columna) que contiene como índice los nombres de las columnas del 
     <dataset> y en sus datos el total de elementos de tipo null o na que se encuentran en cada una.
   """
-  pass
+  df = pd.DataFrame(dataset)
+  ser = df.isna().sum()
+  return ser
 
 def remove_cols_with_nulls(dataset):
   """Retorna <dataset> con todas las columnas que tienen datos de tipo null removidas."""
