@@ -107,5 +107,20 @@ def fill_numeric_nulls(dataset):
 
 def get_most_correlated_cols(dataset, umbral): 
   """Retorna un conjunto de frozensets con los pares de columnas cuyas correlaciones positivas o negativas segan mayores o iguales a <umbral>."""
-  pass
+  #fz = frozenset(dataset)
+  st = set()
+  ds = dataset
+  crd = ds.corr()
+  s = crd.unstack()
+
+  so = s.sort_values()
+  for x in range(len(so)):
+    if umbral <= abs(so[x]):
+      tmp = so.index[x]
+      if tmp[0] != tmp[1]:
+        elem = frozenset(so.index[x])
+        st.add(elem)
+  return st
+
+
   
