@@ -111,9 +111,8 @@ def get_most_correlated_cols(dataset, umbral):
   st = set()
   ds = dataset
   crd = ds.corr()
-  s = crd.unstack()
-
-  so = s.sort_values()
+  so = crd.unstack()
+  
   for x in range(len(so)):
     if umbral <= abs(so[x]):
       tmp = so.index[x]
